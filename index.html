@@ -1,69 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keyboard Layout Practice</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .keyboard { display: grid; grid-template-columns: repeat(10, 1fr); }
-        .key { padding: 20px; margin: 5px; border: 1px solid #ccc; text-align: center; }
-        .highlight { background-color: yellow; }
-    </style>
+    <title>キーボード配列タイピング練習</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>konnnitiha,koregawatasinokangaetaki-bo-donohairetudesu.ho-mupojishongasonzaisinaitame,imamadenohairetuninareteiruhitoha,kanarinyuuryokusinikuitoomoimasu.desuga,dekirudakeoboeyasuku,sinpurunahaitinisitanode,sukositukaebasuguninareruhazudesu.mosikyoumigaareba,anatanopcmokonohairetunisitemirunohaikagadeshouka?</h1>
-    <div class="keyboard">
-        <div class="key">Q</div>
-        <div class="key">U</div>
-        <div class="key">O</div>
-        <div class="key">.</div>
-        <div class="key">G</div>
-        <div class="key">J</div>
-        <div class="key">D</div>
-        <div class="key">B</div>
-        <div class="key">P</div>
-        <div class="key">/</div>
-        <div class="key">E</div>
-        <div class="key">A</div>
-        <div class="key">I</div>
-        <div class="key">F</div>
-        <div class="key">-</div>
-        <div class="key">K</div>
-        <div class="key">S</div>
-        <div class="key">T</div>
-        <div class="key">N</div>
-        <div class="key">H</div>
-        <div class="key">Z</div>
-        <div class="key">X</div>
-        <div class="key">C</div>
-        <div class="key">V</div>
-        <div class="key">/?</div>
-        <div class="key">M</div>
-        <div class="key">Y</div>
-        <div class="key">R</div>
-        <div class="key">W</div>
-        <div class="key">L</div>
+    <div class="container">
+        <h1>New配列 タイピング練習</h1>
+        
+        <div class="practice-section">
+            <p class="instruction">以下の文を入力してください：</p>
+            
+            <!-- 日本語の文 -->
+            <div class="japanese-text">
+                こんにちは、これが私の考えたキーボード配列です。ホームポジションが存在しないため、今までの配列に慣れている人は、かなり入力しにくいと思います。ですが、できるだけ覚えやすく、シンプルな配置にしたため、少し使えばすぐになれるはずです。もし興味があれば、あなたのＰＣもこの配列にしてみるのはいかがでしょうか？
+            </div>
+
+            <!-- ローマ字の文 -->
+            <div class="text-display" id="textDisplay">
+                konnnitiha,koregawatasinokangaetaki-bo-donohairetudesu.ho-mupojishongasonzaisinaitame,imamadenohairetuninareteiruhitoha,kanarinyuuryokusinikuitoomoimasu.desuga,dekirudakeoboeyasuku,sinpurunahaitinisitanode,sukositukaebasuguninareruhazudesu.mosikyoumigaareba,anatanopcmokonohairetunisitemirunohaikagadeshouka?
+            </div>
+
+            <input type="text" id="inputField" class="input-field" placeholder="ここに入力してください" autofocus>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text"><span id="charCount">0</span> / <span id="totalCount">0</span></p>
+        </div>
+
+        <div class="keyboard-section">
+            <h2>New配列</h2>
+            <div class="keyboard">
+                <!-- Third row: Q U O , . G J D B P / -->
+                <div class="key-row">
+                    <div class="key" data-char="q">Q</div>
+                    <div class="key" data-char="u">U</div>
+                    <div class="key" data-char="o">O</div>
+                    <div class="key" data-char=",">，</div>
+                    <div class="key" data-char=".">。</div>
+                    <div class="key" data-char="g">G</div>
+                    <div class="key" data-char="j">J</div>
+                    <div class="key" data-char="d">D</div>
+                    <div class="key" data-char="b">B</div>
+                    <div class="key" data-char="p">P</div>
+                    <div class="key" data-char="/">/</div>
+                </div>
+
+                <!-- Fourth row: E A I F - K S T N H -->
+                <div class="key-row offset">
+                    <div class="key" data-char="e">E</div>
+                    <div class="key" data-char="a">A</div>
+                    <div class="key" data-char="i">I</div>
+                    <div class="key" data-char="f">F</div>
+                    <div class="key" data-char="-">-</div>
+                    <div class="key" data-char="k">K</div>
+                    <div class="key" data-char="s">S</div>
+                    <div class="key" data-char="t">T</div>
+                    <div class="key" data-char="n">N</div>
+                    <div class="key" data-char="h">H</div>
+                </div>
+
+                <!-- Fifth row: Z X C V /? M Y R W L -->
+                <div class="key-row offset-large">
+                    <div class="key" data-char="z">Z</div>
+                    <div class="key" data-char="x">X</div>
+                    <div class="key" data-char="c">C</div>
+                    <div class="key" data-char="v">V</div>
+                    <div class="key" data-char="/">/?</div>
+                    <div class="key" data-char="m">M</div>
+                    <div class="key" data-char="y">Y</div>
+                    <div class="key" data-char="r">R</div>
+                    <div class="key" data-char="w">W</div>
+                    <div class="key" data-char="l">L</div>
+                </div>
+
+                <!-- Space bar row -->
+                <div class="key-row">
+                    <div class="key space-bar" data-char=" ">スペース</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script>
-        document.addEventListener('keydown', function(event) {
-            const key = event.key.toUpperCase();
-            const keys = document.querySelectorAll('.key');
-            keys.forEach(function(k) {
-                if (k.innerText === key) {
-                    k.classList.add('highlight');
-                }
-            });
-        });
-        document.addEventListener('keyup', function(event) {
-            const key = event.key.toUpperCase();
-            const keys = document.querySelectorAll('.key');
-            keys.forEach(function(k) {
-                if (k.innerText === key) {
-                    k.classList.remove('highlight');
-                }
-            });
-        });
-    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
