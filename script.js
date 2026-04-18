@@ -1,15 +1,16 @@
 // キーボード配列のマッピング
 const keyboardLayout = {
     'q': 'q', 'u': 'u', 'o': 'o', ',': ',', '.': '.',
-    'g': 'g', 'j': 'j', 'd': 'd', 'b': 'b', 'p': 'p',
+    'g': 'g', 'j': 'j', 'd': 'd', 'b': 'b', 'p': 'p', '/': '/',
     'e': 'e', 'a': 'a', 'i': 'i', 'f': 'f', '-': '-',
     'k': 'k', 's': 's', 't': 't', 'n': 'n', 'h': 'h',
-    'z': 'z', 'x': 'x', 'c': 'c', 'v': 'v', '/': '/',
+    'z': 'z', 'x': 'x', 'c': 'c', 'v': 'v',
     'm': 'm', 'y': 'y', 'r': 'r', 'w': 'w', 'l': 'l',
     ' ': ' '
 };
 
-const targetText = document.getElementById('textDisplay').textContent.trim();
+const textDisplay = document.getElementById('textDisplay');
+const targetText = textDisplay.textContent.trim();
 const inputField = document.getElementById('inputField');
 const charCount = document.getElementById('charCount');
 const totalCount = document.getElementById('totalCount');
@@ -18,7 +19,17 @@ const keys = document.querySelectorAll('.key[data-char]');
 
 let currentIndex = 0;
 
+// ローマ字テキストを span でラップ
+function initializeTextDisplay() {
+    const chars = targetText.split('');
+    const spanText = chars.map(char => 
+        `<span class="pending" data-char="${char}">${char}</span>`
+    ).join('');
+    textDisplay.innerHTML = spanText;
+}
+
 // 初期化
+initializeTextDisplay();
 totalCount.textContent = targetText.length;
 
 // キーボード入力イベント
@@ -31,6 +42,9 @@ inputField.addEventListener('input', function(e) {
     progressFill.style.width = progress + '%';
     charCount.textContent = currentIndex;
 
+    // テキスト色の更新
+    updateTextDisplay(inputValue);
+
     // キーのハイライト処理
     updateKeyHighlight(inputValue);
 
@@ -39,6 +53,26 @@ inputField.addEventListener('input', function(e) {
         showCompletion();
     }
 });
+
+// テキスト表示の色を更新
+function updateTextDisplay(inputValue) {
+    const spans = textDisplay.querySelectorAll('span');
+    spans.forEach((span, index) => {
+        if (index < inputValue.length) {
+            // 入力済みの文字
+            span.classList.remove('pending', 'current');
+            span.classList.add('completed');
+        } else if (index === inputValue.length) {
+            // 次に入力する文字
+            span.classList.remove('pending', 'completed');
+            span.classList.add('current');
+        } else {
+            // まだ入力していない文字
+            span.classList.remove('completed', 'current');
+            span.classList.add('pending');
+        }
+    });
+}
 
 // キーボード入力でキーをハイライト
 document.addEventListener('keydown', function(e) {
@@ -108,6 +142,7 @@ function showCompletion() {
         progressFill.style.width = '0%';
         charCount.textContent = '0';
         keys.forEach(key => key.classList.remove('correct', 'error'));
+        initializeTextDisplay();
         inputField.focus();
     }, 300);
 }
