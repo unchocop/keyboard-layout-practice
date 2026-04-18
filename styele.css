@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Arial', 'Hiragino Sans', sans-serif;
+    font-family: 'Arial', 'Hiragino Sans', 'Yu Gothic', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
@@ -52,17 +52,51 @@ h2 {
     font-weight: bold;
 }
 
+/* 日本語の文 */
+.japanese-text {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #333;
+    min-height: 60px;
+    word-wrap: break-word;
+    font-weight: 500;
+}
+
+/* ローマ字の文 - 色変わる表現 */
 .text-display {
     background: white;
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     line-height: 1.6;
-    color: #333;
     min-height: 80px;
     word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+.text-display span {
+    transition: color 0.1s;
+}
+
+.text-display span.completed {
+    color: #999;
+}
+
+.text-display span.current {
+    color: #f44336;
+    font-weight: bold;
+}
+
+.text-display span.pending {
+    color: #333;
 }
 
 .input-field {
@@ -73,6 +107,7 @@ h2 {
     border-radius: 8px;
     margin-bottom: 20px;
     transition: border-color 0.3s;
+    font-family: 'Courier New', monospace;
 }
 
 .input-field:focus {
@@ -113,21 +148,31 @@ h2 {
 .keyboard {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     max-width: 100%;
+    justify-content: center;
 }
 
 .key-row {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+/* キーボード配置のオフセット */
+.key-row.offset {
+    margin-left: 50px;
+}
+
+.key-row.offset-large {
+    margin-left: 100px;
+}
+
 .key {
-    min-width: 40px;
-    width: 40px;
-    height: 40px;
+    min-width: 45px;
+    width: 45px;
+    height: 45px;
     background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
     border: 2px solid #999;
     border-radius: 5px;
@@ -135,7 +180,7 @@ h2 {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.95em;
     cursor: pointer;
     transition: all 0.1s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -167,27 +212,10 @@ h2 {
     border-color: #c41c3b;
 }
 
-.key.spacer {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    cursor: default;
-}
-
-.key.spacer.large {
-    flex: 1;
-    min-width: 20px;
-}
-
-.key.function-key {
-    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
-    font-size: 0.7em;
-    color: #666;
-}
-
 .key.space-bar {
-    flex: 3;
-    min-width: 100px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 400px;
 }
 
 @media (max-width: 768px) {
@@ -205,14 +233,23 @@ h2 {
     }
 
     .key {
-        min-width: 32px;
-        width: 32px;
-        height: 32px;
+        min-width: 40px;
+        width: 40px;
+        height: 40px;
         font-size: 0.8em;
     }
 
-    .text-display {
-        font-size: 1em;
+    .key-row.offset {
+        margin-left: 30px;
+    }
+
+    .key-row.offset-large {
+        margin-left: 60px;
+    }
+
+    .text-display,
+    .japanese-text {
+        font-size: 0.95em;
         padding: 15px;
     }
 
