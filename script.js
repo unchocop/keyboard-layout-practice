@@ -1,239 +1,113 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// キーボード配列のマッピング
+const keyboardLayout = {
+    'q': 'q', 'u': 'u', 'o': 'o', ',': ',', '.': '.',
+    'g': 'g', 'j': 'j', 'd': 'd', 'b': 'b', 'p': 'p',
+    'e': 'e', 'a': 'a', 'i': 'i', 'f': 'f', '-': '-',
+    'k': 'k', 's': 's', 't': 't', 'n': 'n', 'h': 'h',
+    'z': 'z', 'x': 'x', 'c': 'c', 'v': 'v', '/': '/',
+    'm': 'm', 'y': 'y', 'r': 'r', 'w': 'w', 'l': 'l',
+    ' ': ' '
+};
 
-body {
-    font-family: 'Arial', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+const targetText = document.getElementById('textDisplay').textContent.trim();
+const inputField = document.getElementById('inputField');
+const charCount = document.getElementById('charCount');
+const totalCount = document.getElementById('totalCount');
+const progressFill = document.getElementById('progressFill');
+const keys = document.querySelectorAll('.key[data-char]');
 
-.container {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    padding: 40px;
-    max-width: 1000px;
-    width: 100%;
-}
+let currentIndex = 0;
 
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 2.5em;
-}
+// 初期化
+totalCount.textContent = targetText.length;
 
-h2 {
-    text-align: center;
-    color: #555;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-}
+// キーボード入力イベント
+inputField.addEventListener('input', function(e) {
+    const inputValue = e.target.value;
+    currentIndex = inputValue.length;
+    
+    // プログレスバー更新
+    const progress = (currentIndex / targetText.length) * 100;
+    progressFill.style.width = progress + '%';
+    charCount.textContent = currentIndex;
 
-.practice-section {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 40px;
-    border: 2px solid #e0e0e0;
-}
+    // キーのハイライト処理
+    updateKeyHighlight(inputValue);
 
-.instruction {
-    font-size: 1.1em;
-    color: #555;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.japanese-text {
-    background: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-    line-height: 1.8;
-    color: #333;
-    min-height: 60px;
-    word-wrap: break-word;
-    font-weight: 500;
-}
-
-.text-display {
-    background: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    font-size: 1.1em;
-    line-height: 1.6;
-    min-height: 80px;
-    word-wrap: break-word;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.05em;
-}
-
-.text-display span {
-    transition: color 0.1s;
-}
-
-.text-display span.completed {
-    color: #999;
-}
-
-.text-display span.current {
-    color: #f44336;
-    font-weight: bold;
-}
-
-.text-display span.pending {
-    color: #333;
-}
-
-.input-field {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.1em;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    transition: border-color 0.3s;
-    font-family: 'Courier New', monospace;
-}
-
-.input-field:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    width: 0%;
-    transition: width 0.1s;
-}
-
-.progress-text {
-    text-align: center;
-    color: #666;
-    font-size: 0.9em;
-}
-
-.keyboard-section {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 30px;
-    border: 2px solid #e0e0e0;
-}
-
-.keyboard {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-}
-
-.key-row {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-}
-
-.key {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-    border: 2px solid #999;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.1s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    user-select: none;
-}
-
-.key:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.key.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-color: #5568d3;
-    transform: translateY(2px);
-    box-shadow: 0 2px 5px rgba(102, 126, 234, 0.4);
-}
-
-.key.correct {
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-    color: white;
-    border-color: #3d8b40;
-}
-
-.key.error {
-    background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
-    color: white;
-    border-color: #c41c3b;
-}
-
-.spacer {
-    width: 20px;
-}
-
-.offset-half {
-    width: 25px;
-}
-
-.offset-full {
-    width: 50px;
-}
-
-.space-bar {
-    flex: 1;
-    min-width: 200px;
-    max-width: 500px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
+    // 完了判定
+    if (inputValue === targetText) {
+        showCompletion();
     }
+});
 
-    h1 {
-        font-size: 1.8em;
+// キーボード入力でキーをハイライト
+document.addEventListener('keydown', function(e) {
+    const char = e.key.toLowerCase();
+    if (keyboardLayout[char]) {
+        highlightKey(char, 'active');
     }
+});
 
-    .key {
-        width: 40px;
-        height: 40px;
-        font-size: 0.8em;
+document.addEventListener('keyup', function(e) {
+    const char = e.key.toLowerCase();
+    if (keyboardLayout[char]) {
+        removeKeyHighlight(char, 'active');
     }
+});
 
-    .text-display,
-    .japanese-text {
-        font-size: 0.95em;
-        padding: 15px;
+// キーのハイライト更新
+function updateKeyHighlight(inputValue) {
+    // すべてのキーをリセット
+    keys.forEach(key => {
+        key.classList.remove('correct', 'error');
+    });
+
+    // 入力済みの部分をマーク
+    for (let i = 0; i < inputValue.length; i++) {
+        const char = inputValue[i];
+        const targetChar = targetText[i];
+        
+        if (char === targetChar) {
+            highlightKeyByChar(char, 'correct');
+        } else {
+            highlightKeyByChar(char, 'error');
+            break;
+        }
     }
+}
+
+// 文字からキーを検索してハイライト
+function highlightKey(char, className) {
+    const key = document.querySelector(`.key[data-char="${char}"]`);
+    if (key) {
+        key.classList.add(className);
+    }
+}
+
+function highlightKeyByChar(char, className) {
+    const key = document.querySelector(`.key[data-char="${char}"]`);
+    if (key && !key.classList.contains('correct') && !key.classList.contains('error')) {
+        key.classList.add(className);
+    }
+}
+
+function removeKeyHighlight(char, className) {
+    const key = document.querySelector(`.key[data-char="${char}"]`);
+    if (key) {
+        key.classList.remove(className);
+    }
+}
+
+// 完了画面
+function showCompletion() {
+    setTimeout(() => {
+        alert('🎉 完成！おめでとうございます！\n\nNew配列のタイピング練習が完了しました。');
+        
+        // 入力フィールドとプログレスをリセット
+        inputField.value = '';
+        progressFill.style.width = '0%';
+        charCount.textContent = '0';
+        keys.forEach(key => key.classList.remove('correct', 'error'));
+        inputField.focus();
+    }, 300);
 }
