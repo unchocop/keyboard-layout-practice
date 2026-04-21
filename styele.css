@@ -52,49 +52,42 @@ h2 {
     font-weight: bold;
 }
 
-.japanese-text {
-    background: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-    line-height: 1.8;
-    color: #333;
-    min-height: 60px;
-    word-wrap: break-word;
-    font-weight: 500;
-}
-
-.text-display {
+/* 日本語とローマ字混合表示 */
+.mixed-display {
     background: white;
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    font-size: 1.1em;
-    line-height: 1.6;
-    min-height: 80px;
+    font-size: 1.3em;
+    line-height: 1.8;
+    color: #333;
+    min-height: 60px;
     word-wrap: break-word;
-    font-family: 'Courier New', monospace;
     letter-spacing: 0.05em;
 }
 
-.text-display span {
+.mixed-display span {
     transition: color 0.1s;
 }
 
-.text-display span.completed {
+.mixed-display .japanese {
+    color: #333;
+    font-weight: 500;
+}
+
+.mixed-display .romaji {
+    color: #333;
+    font-family: 'Courier New', monospace;
+}
+
+.mixed-display .romaji.completed {
     color: #999;
 }
 
-.text-display span.current {
-    color: #f44336;
+.mixed-display .romaji.current {
+    color: #ff8800;
     font-weight: bold;
-}
-
-.text-display span.pending {
-    color: #333;
 }
 
 .input-field {
@@ -231,9 +224,8 @@ h2 {
         font-size: 0.8em;
     }
 
-    .text-display,
-    .japanese-text {
-        font-size: 0.95em;
+    .mixed-display {
+        font-size: 1em;
         padding: 15px;
     }
 }
