@@ -13,13 +13,11 @@
         <div class="practice-section">
             <p class="instruction">以下の文を入力してください：</p>
             
-            <!-- 日本語の文 -->
-            <div class="japanese-text">
-                こんにちは、これが私の考えたキーボード配列です。ホームポジションが存在しないため、今までの配列に慣れている人は、かなり入力しにくいと思います。ですが、できるだけ覚えやすく、シンプルな配置にしたため、少し使えばすぐになれるはずです。もし興味があれば、あなたのＰＣもこの配列にしてみるのはいかがでしょうか？
-            </div>
+            <!-- 日本語とローマ字混合表示 -->
+            <div class="mixed-display" id="mixedDisplay"></div>
 
-            <!-- ローマ字の文 -->
-            <div class="text-display" id="textDisplay">
+            <!-- ローマ字の文（非表示・参照用） -->
+            <div class="text-display" id="textDisplay" style="display:none;">
                 konnnitiha,koregawatasinokangaetaki-bo-donohairetudesu.ho-mupojishongasonzaisinaitame,imamadenohairetuninareteiruhitoha,kanarinyuuryokusinikuitoomoimasu.desuga,dekirudakeoboeyasuku,sinpurunahaitinisitanode,sukositukaebasuguninareruhazudesu.mosikyoumigaareba,anatanopcmokonohairetunisitemirunohaikagadeshouka?
             </div>
 
